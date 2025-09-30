@@ -246,7 +246,7 @@ const LandingPage: React.FC = () => {
                 <li>Centre d'aide</li>
                 <li>Contact</li>
                 <li>Formation</li>
-                <li>Statut</li>
+                <li><a href="https://dcia.pro" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">Site Principal</a></li>
               </ul>
             </div>
             
