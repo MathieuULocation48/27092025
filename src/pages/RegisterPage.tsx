@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Camera, Eye, EyeOff, Mail, Lock, User, Building } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -15,23 +16,33 @@ const RegisterPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     
     if (formData.password !== formData.confirmPassword) {
-      alert('Les mots de passe ne correspondent pas');
+      setError('Les mots de passe ne correspondent pas');
       return;
     }
 
     setIsLoading(true);
     
-    // Simulation d'inscription
-    setTimeout(() => {
+    try {
+      const result = await register(formData);
+      if (result.success) {
+        navigate('/dashboard');
+      } else {
+        setError(result.error || 'Erreur lors de l\'inscription');
+      }
+    } catch (err) {
+      setError('Erreur lors de l\'inscription');
+    } finally {
       setIsLoading(false);
-      navigate('/dashboard');
-    }, 2000);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +74,13 @@ const RegisterPage: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Créer un compte</h2>
           <p className="text-gray-600">Commencez votre essai gratuit</p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <p className="text-sm text-red-700">{error}</p>
+          </div>
+        )}
 
         {/* Register Form */}
         <form onSubmit={handleSubmit} className="space-y-4">

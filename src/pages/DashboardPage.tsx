@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Camera, 
@@ -8,10 +9,21 @@ import {
   Plus,
   Search,
   Filter,
-  Download
+  Download,
+  LogOut,
+  User
 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const DashboardPage: React.FC = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   const stats = [
     { label: 'Véhicules', value: '12', icon: Car, color: 'blue' },
     { label: 'Inspections', value: '48', icon: Camera, color: 'green' },
@@ -40,6 +52,26 @@ const DashboardPage: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
+                  <User className="w-4 h-4 text-gray-600" />
+                  <span className="text-sm text-gray-700">
+                    {user?.firstName} {user?.lastName}
+                  </span>
+                  {user?.isOwner && (
+                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">
+                      Propriétaire
+                    </span>
+                  )}
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  title="Déconnexion"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
               <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-500 transition-colors flex items-center space-x-2">
                 <Plus className="w-4 h-4" />
                 <span>Nouvelle inspection</span>
