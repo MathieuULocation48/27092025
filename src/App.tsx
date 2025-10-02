@@ -120,13 +120,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-              </div>
-            </div>
-          } 
-        />
-      </Routes>
-    </AuthProvider>
-  );
-};
-
-export default App;

@@ -311,12 +311,3 @@ const DashboardPage: React.FC = () => {
 };
 
 export default DashboardPage;
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default DashboardPage;

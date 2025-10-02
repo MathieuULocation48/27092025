@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Car, 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2,
-  Calendar,
-  Gauge
-} from 'lucide-react';
+import { Car, Plus, Search, Filter, CreditCard as Edit, Trash2, Calendar, Gauge } from 'lucide-react';
 import { useVehicles } from '../contexts/VehicleContext';
 import { Vehicle } from '../types';
 import VehicleModal from '../components/VehicleModal';
